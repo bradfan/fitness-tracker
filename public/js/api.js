@@ -2,7 +2,7 @@ const API = {
   async getLastWorkout() {
     let res;
     try {
-      res = await fetch("/api/workouts");
+      res = await fetch("/api/workouts"); // GET route
     } catch (err) {
       console.log(err)
     }
@@ -17,7 +17,7 @@ const API = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
-    });
+    }); // PUT route
 
     const json = await res.json();
 
@@ -28,7 +28,7 @@ const API = {
       method: "POST",
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" }
-    });
+    }); // post route
 
     const json = await res.json();
 
@@ -36,7 +36,7 @@ const API = {
   },
 
   async getWorkoutsInRange() {
-    const res = await fetch(`/api/workouts/range`);
+    const res = await fetch(`/api/workouts/range`); // GET route
     const json = await res.json();
 
     return json;
