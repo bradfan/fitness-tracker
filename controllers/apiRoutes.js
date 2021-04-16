@@ -3,7 +3,7 @@ const { Workout } = require("../models");
 
 // GET /api/workouts => should return all workouts in the database
 // per office hours
-router.get("/workouts", async function (req, res) {
+router.get("/workouts", async (req, res) => {
   try {
     const data = await Workout.aggregate([
       {
@@ -17,12 +17,13 @@ router.get("/workouts", async function (req, res) {
     res.json(data);
   } catch (err) {
     console.log(err);
+
+    res.status(500).send(err);
   }
-  res.status(500).send(err);
 });
 
 // PUT /api/workouts => should add an exercise to the workout
-router.put("/workouts/:id", async function (req, res) {
+router.put("/workouts/:id", async (req, res) => {
   try {
     const data = await Workout.updateOne(
       {
@@ -42,19 +43,18 @@ router.put("/workouts/:id", async function (req, res) {
 });
 
 // POST /api/workouts => create a new workout
-router.post("/workouts", async function (req, res) {
-  const data = await
-  Workout.create(req.body)
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+router.post("/workouts", async (req, res) => {
+  try {
+    const data = await Workout.create(req.body);
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
 });
 
 // GET /api/workouts/range => return last 7 workouts
-router.get("/workouts/range", async function (req, res) {
+router.get("/workouts/range", async (req, res) => {
   try {
     const data = await Workout.aggregate([
       { $limit: 7 },
@@ -84,26 +84,8 @@ router.get("/workouts/range", async function (req, res) {
     res.json(data);
   } catch (err) {
     console.log(err);
-    res.json(err);
+    res.json(500).send(err);
   }
 });
-
-// router.get("/workouts", async function (req, res) {
-//   try {
-//     const data = await Workout.aggregate([
-//       {
-//         $addFields: {
-//           totalDuration: {
-//             $sum: "exercises.duration",
-//           },
-//         },
-//       },
-//     ]);
-//     res.json(data);
-//   } catch (err) {
-//     console.log(err);
-//   }
-//   res.status(500).send(err);
-// });
 
 module.exports = router;
