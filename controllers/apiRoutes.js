@@ -63,21 +63,6 @@ router.get("/workouts/range", async (req, res) => {
           totalDuration: {
             $sum: "$exercises.duration",
           },
-          numExercises: {
-            $sum: "$exercises.name",
-          },
-          totalWeight: {
-            $sum: "$exercises.pounds",
-          },
-          totalSets: {
-            $sum: "$exercises.sets",
-          },
-          totalReps: {
-            $sum: "$exercises.reps",
-          },
-          totalDistance: {
-            $sum: "exercise.distance",
-          },
         },
       },
     ]);

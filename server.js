@@ -15,7 +15,7 @@ app.use(require("./controllers"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/populate", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
 mongoose.connection.once("open", ()=>{
     app.listen(PORT, ()=> {
         console.log ("Server: 8080")

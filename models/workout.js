@@ -3,8 +3,14 @@ const Schema = mongoose.Schema
 // per office hours
 
 // create objects based off the seed.js file for each key used within the [{ type, name etc.}]
-const exerciseSchema = new mongoose.Schema({
-  type: {
+
+
+const workoutSchema = new Schema({
+  day: {
+    type: Date,
+    default:  Date.now,
+  },
+exercises: [{ type: {
     type: String,
     required: true,
   },
@@ -27,15 +33,7 @@ const exerciseSchema = new mongoose.Schema({
   },
   distance: {
     type: Number,
-  },
-});
-
-const workoutSchema = new mongoose.Schema({
-  day: {
-    type: Date,
-    default: new Date(),
-  },
-  exerise: [exerciseSchema],
+  },}],
 });
 const workout = mongoose.model("workouts", workoutSchema);
 // const exercise = mongoose.model("workouts", exerciseSchema);
