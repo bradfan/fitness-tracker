@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const path = require("path");
-// const view = path.resolve(__dirname); ask Tucker/TA what this is?
+const view = path.resolve(__dirname, "../public");
 
 // create a route for each HTML file
 
