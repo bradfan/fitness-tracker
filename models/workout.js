@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-// const Schema = mongoose.Schema
+const Schema = mongoose.Schema
 // per office hours
 
 // create objects based off the seed.js file for each key used within the [{ type, name etc.}]

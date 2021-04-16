@@ -1,32 +1,22 @@
 const router = require("express").Router();
 const path = require("path");
-const view = path.resolve(__dirname, "../public");
+const viewDir = path.join(__dirname, "../views");
 
 // create a route for each HTML file
 
-router.get("/", function(req, res) {
-  res.sendFile()
-})
-
-app.post("/api/exercise", (req, res) => {
+router.get("/", function (req, res) {
   console.log(req.body);
-
-  res.end();
+  res.sendFile(path.join(viewDir, "index.html"));
 });
 
-app.post("/api/stats", (req, res) => {
+router.get("/exercise", (req, res) => {
   console.log(req.body);
-
-  res.end();
+  res.sendFile(path.join(viewDir, "exercise.html"));
 });
 
-app.post("/api/workouts", (req, res) => {
+router.get("/stats", (req, res) => {
   console.log(req.body);
-
-  res.end();
+  res.sendFile(path.join(viewDir, "stats.html"));
 });
-
-
 
 module.exports = router;
-

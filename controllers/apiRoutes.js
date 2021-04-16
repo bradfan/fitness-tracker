@@ -43,6 +43,7 @@ router.put("/workouts/:id", async function (req, res) {
 
 // POST /api/workouts => create a new workout
 router.post("/workouts", async function (req, res) {
+  const data = await
   Workout.create(req.body)
     .then((data) => {
       res.json(data);
@@ -55,12 +56,54 @@ router.post("/workouts", async function (req, res) {
 // GET /api/workouts/range => return last 7 workouts
 router.get("/workouts/range", async function (req, res) {
   try {
-    const data = await Workout.find();
+    const data = await Workout.aggregate([
+      { $limit: 7 },
+      {
+        $addFields: {
+          totalDuration: {
+            $sum: "$exercises.duration",
+          },
+          numExercises: {
+            $sum: "$exercises.name",
+          },
+          totalWeight: {
+            $sum: "$exercises.pounds",
+          },
+          totalSets: {
+            $sum: "$exercises.sets",
+          },
+          totalReps: {
+            $sum: "$exercises.reps",
+          },
+          totalDistance: {
+            $sum: "exercise.distance",
+          },
+        },
+      },
+    ]);
     res.json(data);
   } catch (err) {
     console.log(err);
     res.json(err);
   }
 });
+
+// router.get("/workouts", async function (req, res) {
+//   try {
+//     const data = await Workout.aggregate([
+//       {
+//         $addFields: {
+//           totalDuration: {
+//             $sum: "exercises.duration",
+//           },
+//         },
+//       },
+//     ]);
+//     res.json(data);
+//   } catch (err) {
+//     console.log(err);
+//   }
+//   res.status(500).send(err);
+// });
 
 module.exports = router;
