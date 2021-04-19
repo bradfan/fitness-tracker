@@ -1,41 +1,44 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 // per office hours
 
 // create objects based off the seed.js file for each key used within the [{ type, name etc.}]
 
-
 const workoutSchema = new Schema({
   day: {
     type: Date,
-    default:  Date.now,
+    default: Date.now,
   },
-exercises: [{ type: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  duration: {
-    type: Number,
-    required: true,
-  },
-  weight: {
-    type: Number,
-  },
-  reps: {
-    type: Number,
-  },
-  sets: {
-    type: Number,
-  },
-  distance: {
-    type: Number,
-  },}],
+  exercises: [
+    {
+      type: {
+        type: String,
+        required: true,
+      },
+      name: {
+        type: String,
+        required: true,
+      },
+      duration: {
+        type: Number,
+        required: true,
+      },
+      weight: {
+        type: Number,
+      },
+      reps: {
+        type: Number,
+      },
+      sets: {
+        type: Number,
+      },
+      distance: {
+        type: Number,
+      },
+    },
+  ],
 });
 const workout = mongoose.model("workouts", workoutSchema);
-// const exercise = mongoose.model("workouts", exerciseSchema);
 
-module.exports = workout
+
+module.exports = workout;

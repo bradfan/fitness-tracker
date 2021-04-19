@@ -9,11 +9,12 @@ app.use(morgan("dev"));
 
 // middleware
 // app.use(express.static(path.join(__dirname, "public")));
-app.use(express.static("public"));
-app.use(require("./controllers"));
-//  (below middleware)for PUT and POST routes - comment these to see what happens (after it's running.)
+
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static("public"));
+app.use(require("./controllers"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
 mongoose.connection.once("open", ()=>{

@@ -23,24 +23,41 @@ router.get("/workouts", async (req, res) => {
 });
 
 // PUT /api/workouts => should add an exercise to the workout
-router.put("/workouts/:id", async (req, res) => {
-  try {
-    const data = await Workout.updateOne(
-      {
-        id: req.params.id,
-      },
-      {
-        $push: {
-          exercises: req.body,
-        },
-      }
-    );
-    res.json(data);
-  } catch (err) {
-    console.log(err);
-    res.json(err);
-  }
+router.put("/workouts/:id", ({ body, params }, res) => {
+  Workout.findByIdAndUpdate(
+    params.id,
+    { $push: { exercises: body } },
+    // "runValidators" will ensure new exercises meet our schema requirements
+    { new: true, runValidators: true }
+  )
+    .then((dbWorkout) => {
+      res.json(dbWorkout);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
 });
+
+// router.put("/workouts/:id", async (req, res) => {
+//   console.log("req.body: ", req.body)
+//   try {
+//     //updateOne
+//     const data = await Workout.findOneAndUpdate(
+//       {
+//         _id: req.params.id,
+//       },
+//       {
+//         $push: {
+//           exercises: req.body,
+//         },
+//       }
+//     );
+//     res.json(data);
+//   } catch (err) {
+//     console.log(err);
+//     res.json(err);
+//   }
+// });
 
 // POST /api/workouts => create a new workout
 router.post("/workouts", async (req, res) => {
